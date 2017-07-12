@@ -9,22 +9,13 @@ running = True
 s = serial.Serial('COM14', 9600, timeout=0.5)
 
 
-def bearing_map(bearing):
-    output = bearing - (180 - (180 - 12)) * (1212) / (180 + (180 - 12)
-                                                      ) - (180 - (180 - 12)) + 894 + (1212 * (894 / 360))
-    panTo = ((bearing - (155 - 168)) * (2106 - 894) /
-             ((155 + 168) - (155 - 168)) + 894) + (1212 * 894 / 360)
-
-    bearing = (bearing - 180)
-    if bearing < 0:
-        bearing = bearing + 360
-    bearing = int((bearing * 3.37 + 893.4) * 4)
-    print output
-    print panTo
-    print bearing
+def setTargetMiniSSC(value):
+    moveTilt = [0xFF, 0x01, value]
+    print(moveTilt)
+    s.write(moveTilt)
 
 
-def byte_output(value):
+def setTargetCompact(value):
     msb = (value >> 7) & 0x7F
     lsb = value & 0x7F
     # print(msb)
@@ -32,6 +23,13 @@ def byte_output(value):
     moveTilt = [0x84, 0x01, lsb, msb]
     print(moveTilt)
     s.write(moveTilt)
+
+
+def getPosition():
+    command = [0x90, 0x01]
+    s.write(command)
+    positionData = s.read(2)
+    print positionData
 
 
 # bearing_map(180)
@@ -46,8 +44,7 @@ while running:
         running = False
     else:
         byte_output(inValue)
-        print (inValue/4)
-
+        print (inValue / 4)
 
 
 '''
