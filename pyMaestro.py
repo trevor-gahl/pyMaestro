@@ -27,8 +27,10 @@ def getPosition():
     command = [0x90, 0x01]
     s.write(command)
     positionData = s.read(2)
-    print positionData
-
+    lsb = ord(positionData[0])
+    msb = ord(positionData[1])
+    value = (msb << 8) | lsb
+    print value
 
 while running:
     print "\nEnter desired PWM value or 0 to exit"
@@ -38,3 +40,4 @@ while running:
     else:
         setTargetCompact(inValue)
         print (inValue / 4)
+        getPosition()
