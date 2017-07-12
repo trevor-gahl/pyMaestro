@@ -18,8 +18,6 @@ def setTargetMiniSSC(value):
 def setTargetCompact(value):
     msb = (value >> 7) & 0x7F
     lsb = value & 0x7F
-    # print(msb)
-    # print(lsb)
     moveTilt = [0x84, 0x01, lsb, msb]
     print(moveTilt)
     s.write(moveTilt)
@@ -32,39 +30,11 @@ def getPosition():
     print positionData
 
 
-# bearing_map(180)
-byte_output(6002)
-
-
 while running:
     print "\nEnter desired PWM value or 0 to exit"
     inValue = int(raw_input())
-    #inValue = inValue * 4
     if inValue == 0:
         running = False
     else:
-        byte_output(inValue)
+        setTargetCompact(inValue)
         print (inValue / 4)
-
-
-'''
-while(number < 8000):
-    byte_output(number)
-    number += 60
-    print number
-    time.sleep(1)
-
-
-while(number > 3999):
-    byte_output(number)
-    number -= 60
-    print number
-    time.sleep(1)
-'''
-
-
-'''
-byte_output(3576)
-time.sleep(10)
-byte_output(8424)
-'''
