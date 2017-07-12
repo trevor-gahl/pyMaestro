@@ -1,3 +1,13 @@
+###########################################
+## Name: Trevor Gahl                     ##
+##                                       ##
+## Date: 7/12/2017                       ##
+##                                       ##
+## Desc: Program communicates with the   ##
+##       Pololu Maestro servo controller ##
+##       to drive servos                 ##
+###########################################
+
 import serial
 import serial.tools.list_ports
 import time
