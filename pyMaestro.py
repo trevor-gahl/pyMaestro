@@ -6,7 +6,7 @@ number = 4000
 test_out = [None] * 2
 running = True
 
-#s = serial.Serial('COM4', 9600, timeout=0.5)
+s = serial.Serial('COM14', 9600, timeout=0.5)
 
 
 def bearing_map(bearing):
@@ -29,18 +29,25 @@ def byte_output(value):
     lsb = value & 0x7F
     # print(msb)
     # print(lsb)
-    moveTilt = [0x84, 0x00, lsb, msb]
-    # print(moveTilt)
-    # s.write(moveTilt)
+    moveTilt = [0x84, 0x01, lsb, msb]
+    print(moveTilt)
+    s.write(moveTilt)
 
 
 # bearing_map(180)
+byte_output(6002)
+
+
 while running:
     print "\nEnter desired PWM value or 0 to exit"
-    inValue = int(raw_input("Input PWM Value: "))
+    inValue = int(raw_input())
+    #inValue = inValue * 4
     if inValue == 0:
         running = False
-    byte_output(5500)
+    else:
+        byte_output(inValue)
+        print (inValue/4)
+
 
 
 '''
